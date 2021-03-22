@@ -2,9 +2,9 @@
 
 namespace JMS\JobQueueBundle\Command;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
 use JMS\JobQueueBundle\Console\CronCommand;
 use JMS\JobQueueBundle\Cron\CommandScheduler;
 use JMS\JobQueueBundle\Cron\JobScheduler;
@@ -106,7 +106,7 @@ class ScheduleCommand extends Command
                 $job = $scheduler->createJob($name, $lastRunAt);
                 $em = $this->registry->getManagerForClass(Job::class);
                 $em->persist($job);
-                $em->flush($job);
+                $em->flush();
             }
         }
     }
@@ -118,7 +118,7 @@ class ScheduleCommand extends Command
         $con = $em->getConnection();
 
         $now = new \DateTime();
-        $affectedRows = $con->executeUpdate(
+        $affectedRows = $con->executeStatement(
             "UPDATE jms_cron_jobs SET lastRunAt = :now WHERE command = :command AND lastRunAt = :lastRunAt",
             array(
                 'now' => $now,

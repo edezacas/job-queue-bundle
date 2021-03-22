@@ -23,11 +23,11 @@ class RunCommandTest extends BaseTestCase
 
         $output = $this->runConsoleCommand(array('--max-runtime' => 5, '--worker-name' => 'test'));
         $expectedOutput = "Started Job(id = 1, command = \"adoigjaoisdjfijasodifjoiajsdf\").\n"
-                         ."Job(id = 1, command = \"adoigjaoisdjfijasodifjoiajsdf\") finished with exit code 1.\n";
+            ."Job(id = 1, command = \"adoigjaoisdjfijasodifjoiajsdf\") finished with exit code 1.\n";
         $this->assertEquals($expectedOutput, $output);
         $this->assertEquals('failed', $a->getState());
         $this->assertEquals('', $a->getOutput());
-        $this->assertContains('Command "adoigjaoisdjfijasodifjoiajsdf" is not defined.', $a->getErrorOutput());
+        $this->assertStringContainsString('Command "adoigjaoisdjfijasodifjoiajsdf" is not defined.', $a->getErrorOutput());
         $this->assertEquals('canceled', $b->getState());
     }
 
@@ -45,7 +45,7 @@ class RunCommandTest extends BaseTestCase
     {
         $job = new Job('jms-job-queue:successful-cmd');
         $this->em->persist($job);
-        $this->em->flush($job);
+        $this->em->flush();
 
         $this->runConsoleCommand(array('--max-runtime' => 1, '--worker-name' => 'test'));
         $this->assertEquals('finished', $job->getState());
@@ -57,7 +57,7 @@ class RunCommandTest extends BaseTestCase
     public function testQueueWithLimitedConcurrentJobs()
     {
         $outputFile = tempnam(sys_get_temp_dir(), 'job-output');
-        for ($i=0; $i<4; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $job = new Job('jms-job-queue:logging-cmd', array('Job'.$i, $outputFile, '--runtime=1'));
             $this->em->persist($job);
         }
@@ -69,7 +69,8 @@ class RunCommandTest extends BaseTestCase
         $output = file_get_contents($outputFile);
         unlink($outputFile);
 
-        $this->assertEquals(<<<OUTPUT
+        $this->assertEquals(
+            <<<OUTPUT
 Job0 started
 Job0 stopped
 Job1 started
@@ -91,7 +92,7 @@ OUTPUT
     public function testQueueWithMoreThanOneConcurrentJob()
     {
         $outputFile = tempnam(sys_get_temp_dir(), 'job-output');
-        for ($i=0; $i<3; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $job = new Job('jms-job-queue:logging-cmd', array('Job'.$i, $outputFile, '--runtime=4'), true, 'foo');
             $this->em->persist($job);
         }
@@ -100,7 +101,8 @@ OUTPUT
         $output = $this->runConsoleCommand(array('--max-runtime' => 15, '--worker-name' => 'test'));
         unlink($outputFile);
 
-        $this->assertStringStartsWith(<<<OUTPUT
+        $this->assertStringStartsWith(
+            <<<OUTPUT
 Started Job(id = 1, command = "jms-job-queue:logging-cmd").
 Started Job(id = 2, command = "jms-job-queue:logging-cmd").
 OUTPUT
@@ -108,7 +110,8 @@ OUTPUT
             $output
         );
 
-        $this->assertStringStartsNotWith(<<<OUTPUT
+        $this->assertStringStartsNotWith(
+            <<<OUTPUT
 Started Job(id = 1, command = "jms-job-queue:logging-cmd").
 Started Job(id = 2, command = "jms-job-queue:logging-cmd").
 Started Job(id = 3, command = "jms-job-queue:logging-cmd").
@@ -131,7 +134,9 @@ OUTPUT
         $this->em->persist($c);
         $this->em->flush();
 
-        $this->runConsoleCommand(array('--max-runtime' => 1, '--queue' => array('other_queue'), '--worker-name' => 'test'));
+        $this->runConsoleCommand(
+            array('--max-runtime' => 1, '--queue' => array('other_queue'), '--worker-name' => 'test')
+        );
         $this->assertEquals(Job::STATE_PENDING, $a->getState());
         $this->assertEquals(Job::STATE_FINISHED, $b->getState());
         $this->assertEquals(Job::STATE_PENDING, $c->getState());
@@ -150,7 +155,13 @@ OUTPUT
         $this->em->persist($c);
         $this->em->flush();
 
-        $this->runConsoleCommand(array('--max-runtime' => 1, '--queue' => array('other_queue', 'yet_another_queue'), '--worker-name' => 'test'));
+        $this->runConsoleCommand(
+            array(
+                '--max-runtime' => 1,
+                '--queue' => array('other_queue', 'yet_another_queue'),
+                '--worker-name' => 'test',
+            )
+        );
         $this->assertEquals(Job::STATE_PENDING, $a->getState());
         $this->assertEquals(Job::STATE_FINISHED, $b->getState());
         $this->assertEquals(Job::STATE_FINISHED, $c->getState());
@@ -183,7 +194,7 @@ OUTPUT
         $job = new Job('jms-job-queue:sometimes-failing-cmd', array(time()));
         $job->setMaxRetries(5);
         $this->em->persist($job);
-        $this->em->flush($job);
+        $this->em->flush();
 
         $this->runConsoleCommand(array('--max-runtime' => 12, '--verbose' => null, '--worker-name' => 'test'));
 
@@ -197,7 +208,7 @@ OUTPUT
         $job = new Job('jms-job-queue:never-ending');
         $job->setMaxRuntime(1);
         $this->em->persist($job);
-        $this->em->flush($job);
+        $this->em->flush();
 
         $this->runConsoleCommand(array('--max-runtime' => 1, '--worker-name' => 'test'));
         $this->assertEquals('terminated', $job->getState());
@@ -217,7 +228,8 @@ OUTPUT
 
         $output = $this->runConsoleCommand(array('--max-runtime' => 4, '--worker-name' => 'test'));
 
-        $this->assertEquals(<<<OUTPUT
+        $this->assertEquals(
+            <<<OUTPUT
 Started Job(id = 2, command = "jms-job-queue:successful-cmd").
 Job(id = 2, command = "jms-job-queue:successful-cmd") finished with exit code 0.
 Started Job(id = 1, command = "jms-job-queue:successful-cmd").
@@ -243,7 +255,8 @@ OUTPUT
 
         $output = $this->runConsoleCommand(array('--max-runtime' => 4, '--worker-name' => 'test'));
 
-        $this->assertEquals(<<<OUTPUT
+        $this->assertEquals(
+            <<<OUTPUT
 Started Job(id = 1, command = "jms-job-queue:successful-cmd").
 Job(id = 1, command = "jms-job-queue:successful-cmd") finished with exit code 0.
 Started Job(id = 2, command = "jms-job-queue:successful-cmd").
@@ -253,7 +266,6 @@ OUTPUT
             ,
             $output
         );
-
     }
 
     /**
@@ -263,7 +275,7 @@ OUTPUT
     {
         $job = new Job('jms-job-queue:throws-exception-cmd');
         $this->em->persist($job);
-        $this->em->flush($job);
+        $this->em->flush();
 
         $this->assertNull($job->getStackTrace());
         $this->assertNull($job->getMemoryUsage());
@@ -276,7 +288,7 @@ OUTPUT
         $this->assertNotNull($job->getMemoryUsageReal());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->createClient(array('config' => 'persistent_db.yml'));
 

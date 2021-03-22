@@ -2,9 +2,10 @@
 
 namespace JMS\JobQueueBundle\Command;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use JMS\JobQueueBundle\Entity\Job;
 use JMS\JobQueueBundle\Entity\Repository\JobManager;
 use Symfony\Component\Console\Command\Command;
@@ -45,6 +46,8 @@ class CleanUpCommand extends Command
 
         $this->cleanUpExpiredJobs($em, $con, $input);
         $this->collectStaleJobs($em);
+
+        return 0;
     }
 
     private function collectStaleJobs(EntityManager $em)
@@ -135,7 +138,7 @@ class CleanUpCommand extends Command
             }
         }
 
-        $em->getConnection()->executeUpdate("DELETE FROM jms_job_dependencies WHERE dest_job_id = :id", array('id' => $job->getId()));
+        $em->getConnection()->executeStatement("DELETE FROM jms_job_dependencies WHERE dest_job_id = :id", array('id' => $job->getId()));
     }
 
     private function findExpiredJobs(EntityManager $em, InputInterface $input)
