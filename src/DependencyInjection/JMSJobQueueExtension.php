@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -42,7 +42,11 @@ class JMSJobQueueExtension extends Extension implements PrependExtensionInterfac
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+
         $loader->load('services.xml');
         $loader->load('console.xml');
 
@@ -62,15 +66,18 @@ class JMSJobQueueExtension extends Extension implements PrependExtensionInterfac
 
     public function prepend(ContainerBuilder $container)
     {
-        $container->prependExtensionConfig('doctrine', array(
-            'dbal' => array(
-                'types' => array(
-                    'jms_job_safe_object' => array(
-                        'class' => SafeObjectType::class,
-                        'commented' => true,
-                    )
-                )
+        $container->prependExtensionConfig(
+            'doctrine',
+            array(
+                'dbal' => array(
+                    'types' => array(
+                        'jms_job_safe_object' => array(
+                            'class' => SafeObjectType::class,
+                            'commented' => true,
+                        ),
+                    ),
+                ),
             )
-        ));
+        );
     }
 }

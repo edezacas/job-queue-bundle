@@ -18,7 +18,7 @@ doctrine:
                     JMSJobQueueBundle:
                         is_bundle: false
                         type: 'annotation'
-                        dir: '%kernel.project_dir%/Entity'
+                        dir: '%kernel.project_dir%/src/Entity'
                         prefix: 'JMS\JobQueueBundle\Entity'
                         alias: JMSJobQueueBundle
             test:
@@ -27,6 +27,6 @@ doctrine:
                     TestBundle:
                         is_bundle: false
                         type: 'annotation'
-                        dir: '%kernel.project_dir%/Tests/Functional/TestBundle/Entity'
+                        dir: '%kernel.project_dir%/tests/Functional/TestBundle/Entity'
                         prefix: 'JMS\JobQueueBundle\Tests\Functional\TestBundle\Entity'
                         alias: TestBundle

@@ -18,6 +18,7 @@
 
 namespace JMS\JobQueueBundle\Tests\Entity;
 
+
 use JMS\JobQueueBundle\Entity\Job;
 use JMS\JobQueueBundle\Exception\InvalidStateTransitionException;
 use PHPUnit\Framework\TestCase;

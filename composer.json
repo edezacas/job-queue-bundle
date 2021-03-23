@@ -41,12 +41,12 @@
   },
   "autoload": {
     "psr-4": {
-      "JMS\\JobQueueBundle\\": ""
+      "JMS\\JobQueueBundle\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "JMS\\JobQueueBundle\\Tests\\": "Tests/"
+      "JMS\\JobQueueBundle\\Tests\\": "tests/"
     }
   },
   "target-dir": "JMS/JobQueueBundle",

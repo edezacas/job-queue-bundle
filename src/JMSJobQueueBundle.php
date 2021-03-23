@@ -28,4 +28,9 @@ class JMSJobQueueBundle extends Bundle
     {
         $container->addCompilerPass(new LinkGeneratorsPass());
     }
+
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
 }
