@@ -1,5 +1,9 @@
 # CHANGELOG
 
+4.0.1
+------
+- Update Travis build
+
 4.0.0
 -----
  - Support Symfony 4 and 5.
