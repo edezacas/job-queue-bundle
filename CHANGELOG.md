@@ -1,16 +1,9 @@
 # CHANGELOG
 
-5.0.0
------
-Support Symfony 5.2.
-
-Fix deprecation notices
-
-
-
-
 4.0.0
 -----
+ - Support Symfony 4 and 5.
+
 Fix deprecation notices
 
 - Remove ContainerAwareCommand dependency
@@ -27,4 +20,3 @@ Fix deprecation notices
 Remaining issues:
 
 - The detach method (entity manager) is deprecated and no replacement is available.
-- With Symfony 5 the commands must return a status code. Also, the constructor arguments to the Process class changed. Returning zero and update the creation of Process class still led to failing tests. For now this problem is not relevant. Symfony 5 would have been a nice extra. Note that I made the version constraint more avoid problems in Symfony 5 applications.

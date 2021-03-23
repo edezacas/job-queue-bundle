@@ -38,7 +38,6 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \JMS\JobQueueBundle\JMSJobQueueBundle(),
             new \JMS\JobQueueBundle\Tests\Functional\TestBundle\TestBundle(),
