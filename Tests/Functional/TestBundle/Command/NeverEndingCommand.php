@@ -18,5 +18,7 @@ class NeverEndingCommand extends Command
         while (true) {
             sleep(5);
         }
+
+        return 0;
     }
 }

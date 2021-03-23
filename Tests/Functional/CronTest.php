@@ -9,12 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class CronTest extends BaseTestCase
 {
-    /** @var Application */
-    private $app;
-
-    /** @var EntityManager */
-    private $em;
-
     public function testSchedulesCommands()
     {
         $output = $this->doRun(array('--min-job-interval' => 1, '--max-runtime' => 12));
@@ -23,19 +17,12 @@ class CronTest extends BaseTestCase
 
     protected function setUp(): void
     {
-        $this->createClient(array('config' => 'persistent_db.yml'));
+        parent::setUp();
+    }
 
-        if (is_file($databaseFile = self::$kernel->getCacheDir().'/database.sqlite')) {
-            unlink($databaseFile);
-        }
-
-        $this->importDatabaseSchema();
-
-        $this->app = new Application(self::$kernel);
-        $this->app->setAutoExit(false);
-        $this->app->setCatchExceptions(false);
-
-        $this->em = self::$kernel->getContainer()->get('doctrine')->getManagerForClass('JMSJobQueueBundle:Job');
+    protected function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     private function doRun(array $args = array())

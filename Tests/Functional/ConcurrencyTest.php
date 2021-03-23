@@ -21,16 +21,13 @@ class ConcurrencyTest extends BaseTestCase
 
         $filename = tempnam(sys_get_temp_dir(), 'log');
 
-        /** @var EntityManager $em */
-        $em = self::$kernel->getContainer()->get('doctrine')->getManager();
-
         /** @var Job[] $jobs */
         $jobs = array();
         for ($i = 0; $i < 5; $i++) {
             $jobs[] = $job = new Job('jms-job-queue:logging-cmd', array('Job-'.$i, $filename, '--runtime=1'));
-            $em->persist($job);
+            $this->em->persist($job);
         }
-        $em->flush();
+        $this->em->flush();
 
         $this->waitUntilJobsProcessed(20);
 
@@ -43,7 +40,7 @@ class ConcurrencyTest extends BaseTestCase
 
         $workers = array();
         foreach ($jobs as $job) {
-            $em->refresh($job);
+            $this->em->refresh($job);
             $workers[] = $job->getWorkerName();
         }
 
@@ -55,34 +52,12 @@ class ConcurrencyTest extends BaseTestCase
 
     protected function setUp(): void
     {
-        $this->databaseFile = tempnam(sys_get_temp_dir(), 'db');
-        $this->configFile = tempnam(sys_get_temp_dir(), 'di-cfg');
-        unlink($this->configFile);
-        $this->configFile .= '.yml';
-
-        $persistentDbConfig = __DIR__.'/config/persistent_db.yml';
-        file_put_contents(
-            $this->configFile,
-            <<<CONFIG
-imports:
-    - { resource: "{$persistentDbConfig}" }
-
-parameters:
-    database_path: "{$this->databaseFile}"
-
-CONFIG
-        );
-
-        self::$kernel = self::createKernel(array('config' => $this->configFile));
-        self::$kernel->boot();
-
-        $this->importDatabaseSchema();
+        parent::setUp();
     }
 
     protected function tearDown(): void
     {
-        @unlink($this->databaseFile);
-        @unlink($this->configFile);
+        parent::tearDown();
 
         foreach ($this->processes as $process) {
             if (!$process->isRunning()) {
@@ -107,7 +82,7 @@ CONFIG
             usleep(2E5);
 
             /** @var EntityManager $em */
-            $em = self::$kernel->getContainer()->get('doctrine')->getManager();
+            $em = self::$kernel->getContainer()->get('doctrine')->getManagerForClass('JMSJobQueueBundle:Job');
 
             $jobCount = $em->createQuery("SELECT COUNT(j) FROM ".Job::class." j WHERE j.state IN (:nonFinalStates)")
                 ->setParameter('nonFinalStates', array(Job::STATE_RUNNING, Job::STATE_NEW, Job::STATE_PENDING))

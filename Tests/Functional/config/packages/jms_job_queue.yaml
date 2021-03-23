@@ -1,0 +1,7 @@
+jms_job_queue:
+  queue_options_defaults:
+    max_concurrent_jobs: 1
+
+  queue_options:
+    foo:
+      max_concurrent_jobs: 2

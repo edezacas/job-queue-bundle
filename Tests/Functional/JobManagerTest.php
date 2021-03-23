@@ -15,9 +15,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class JobManagerTest extends BaseTestCase
 {
-    /** @var EntityManager */
-    private $em;
-
     /** @var JobManager */
     private $jobManager;
 
@@ -256,7 +253,7 @@ class JobManagerTest extends BaseTestCase
         $train = new Train();
         $wagon->train = $train;
 
-        $defEm = self::$kernel->getContainer()->get('doctrine')->getManager('default');
+        $defEm = self::$kernel->getContainer()->get('doctrine')->getManager('test');
         $defEm->persist($wagon);
         $defEm->persist($train);
         $defEm->flush();
@@ -282,15 +279,19 @@ class JobManagerTest extends BaseTestCase
 
     protected function setUp(): void
     {
-        $this->createClient();
-        $this->importDatabaseSchema();
+        parent::setUp();
 
         $this->dispatcher = $this->createMock('Symfony\Contracts\EventDispatcher\EventDispatcherInterface');
-        $this->em = self::$kernel->getContainer()->get('doctrine')->getManagerForClass(Job::class);
+
         $this->jobManager = new JobManager(
-            self::$kernel->getContainer()->get('doctrine'),
+            static::$kernel->getContainer()->get('doctrine'),
             $this->dispatcher,
             new ExponentialRetryScheduler()
         );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
     }
 }

@@ -5,13 +5,9 @@ namespace JMS\JobQueueBundle\Tests\Functional;
 use JMS\JobQueueBundle\Entity\Job;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class RunCommandTest extends BaseTestCase
 {
-    private $app;
-    private $em;
-
     public function testRun()
     {
         $a = new Job('adoigjaoisdjfijasodifjoiajsdf');
@@ -27,7 +23,10 @@ class RunCommandTest extends BaseTestCase
         $this->assertEquals($expectedOutput, $output);
         $this->assertEquals('failed', $a->getState());
         $this->assertEquals('', $a->getOutput());
-        $this->assertStringContainsString('Command "adoigjaoisdjfijasodifjoiajsdf" is not defined.', $a->getErrorOutput());
+        $this->assertStringContainsString(
+            'Command "adoigjaoisdjfijasodifjoiajsdf" is not defined.',
+            $a->getErrorOutput()
+        );
         $this->assertEquals('canceled', $b->getState());
     }
 
@@ -290,19 +289,12 @@ OUTPUT
 
     protected function setUp(): void
     {
-        $this->createClient(array('config' => 'persistent_db.yml'));
+        parent::setUp();
+    }
 
-        if (is_file($databaseFile = self::$kernel->getCacheDir().'/database.sqlite')) {
-            unlink($databaseFile);
-        }
-
-        $this->importDatabaseSchema();
-
-        $this->app = new Application(self::$kernel);
-        $this->app->setAutoExit(false);
-        $this->app->setCatchExceptions(false);
-
-        $this->em = self::$kernel->getContainer()->get('doctrine')->getManagerForClass('JMSJobQueueBundle:Job');
+    protected function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     private function runConsoleCommand(array $args = array())

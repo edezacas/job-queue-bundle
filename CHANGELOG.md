@@ -1,5 +1,14 @@
 # CHANGELOG
 
+5.0.0
+-----
+Support Symfony 5.2.
+
+Fix deprecation notices
+
+
+
+
 4.0.0
 -----
 Fix deprecation notices
