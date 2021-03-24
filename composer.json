@@ -1,6 +1,6 @@
 {
   "name": "digitalascetic/job-queue-bundle",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Allows to run and schedule Symfony console commands as background jobs.",
   "keywords": [
     "job",
@@ -25,8 +25,8 @@
   "require": {
     "php": ">=7.3",
     "symfony/framework-bundle": "^4.0|^5.0",
-    "symfony/process": "^4.0|^5.0",
-    "symfony/orm-pack": "^2.1"
+    "symfony/process": "*",
+    "symfony/orm-pack": "*"
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "*",
