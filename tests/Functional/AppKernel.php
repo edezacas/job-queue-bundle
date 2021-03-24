@@ -46,7 +46,7 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $confDir = $this->getProjectDir().'/Tests/Functional/config';
+        $confDir = $this->getProjectDir().'/tests/Functional/config';
         $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
     }
 }
