@@ -1,5 +1,9 @@
 # CHANGELOG
 
+4.1.4
+-----
+- Updated JobManager using Types::JSON instead of Type::JSON_ARRAY or hard coded.
+
 4.1.3
 -----
 - Changed return types to EntityManagerInterface.
