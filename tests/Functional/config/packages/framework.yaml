@@ -5,4 +5,4 @@ framework:
         log: true
     router:
         utf8: true
-        resource: "%kernel.project_dir%/Tests/Functional/config/routing.yml"
+        resource: "%kernel.project_dir%/tests/Functional/config/routing.yml"
