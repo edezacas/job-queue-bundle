@@ -121,10 +121,7 @@ class JobManager
             // We do not want to have non-startable jobs floating around in
             // cache as they might be changed by another process. So, better
             // re-fetch them when they are not excluded anymore.
-            /**
-             * @deprecated
-             */
-            $this->getJobManager()->detach($job);
+            $this->detachJobFromManager($job);
         }
 
         return null;
@@ -278,13 +275,22 @@ class JobManager
                     continue;
                 }
 
-                $this->getJobManager()->detach($job);
+                $this->detachJobFromManager($job);
             }
         } catch (\Exception $ex) {
             $this->getJobManager()->getConnection()->rollback();
 
             throw $ex;
         }
+    }
+
+    /**
+     * @param Job $job
+     * @todo EntityManager::detach is marked as deprecated, but seems will be undeprecated https://github.com/doctrine/orm/pull/8466
+     */
+    private function detachJobFromManager(Job $job)
+    {
+        $this->getJobManager()->detach($job);
     }
 
     private function closeJobInternal(Job $job, $finalState, array &$visited = array())

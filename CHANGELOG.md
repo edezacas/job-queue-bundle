@@ -1,5 +1,10 @@
 # CHANGELOG
 
+4.1.0
+-----
+- (Deprecated) Removed commented property declaring jms_job_safe_object Doctrine Type.
+- (Test) Added doctrine.dbal.override_url to _doctrine.yaml_ test file to fix deprecation.
+
 4.0.1
 ------
 - Update Travis build
