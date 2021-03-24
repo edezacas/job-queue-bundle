@@ -4,6 +4,7 @@ doctrine:
         connections:
             default:
                 url: 'sqlite:///%kernel.project_dir%/var/test.db'
+                override_url: true
             test:
                 driver: pdo_sqlite
                 memory: true
