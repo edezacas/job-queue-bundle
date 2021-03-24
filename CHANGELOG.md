@@ -1,5 +1,10 @@
 # CHANGELOG
 
+4.1.3
+-----
+- Changed return types to EntityManagerInterface.
+- Changed Job $args type to JsonType.
+
 4.1.2
 -----
 - Fixed README travis link.
