@@ -1,5 +1,9 @@
 # CHANGELOG
 
+4.1.1
+-----
+- (Deprecated) EntityManager::detach is deprecated; added SYMFONY_DEPRECATIONS_HELPER to handle this deprecations messages.
+
 4.1.0
 -----
 - (Deprecated) Removed commented property declaring jms_job_safe_object Doctrine Type.

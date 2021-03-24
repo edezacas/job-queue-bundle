@@ -286,9 +286,10 @@ class JobManager
 
     /**
      * @param Job $job
-     * @todo EntityManager::detach is marked as deprecated, but seems will be undeprecated https://github.com/doctrine/orm/pull/8466
+     * @todo EntityManager::detach is marked as deprecated, but seems will be undeprecated https://github.com/doctrine/orm/pull/8466;
+     * @todo After that, remove SYMFONY_DEPRECATIONS_HELPER env from phpunit.xml.dist
      */
-    private function detachJobFromManager(Job $job)
+    private function detachJobFromManager(Job $job): void
     {
         $this->getJobManager()->detach($job);
     }
