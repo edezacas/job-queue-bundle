@@ -1,5 +1,8 @@
-JMSJobQueueBundle [![Build Status](https://secure.travis-ci.org/schmittjoh/JMSJobQueueBundle.png?branch=master)](http://travis-ci.org/schmittjoh/JMSJobQueueBundle)
+digitalascetic/job-queue-bundle [![Build Status](https://travis-ci.com/digitalascetic/JMSJobQueueBundle.svg?branch=master)](http://travis-ci.org/digitalascetic/JMSJobQueueBundle)
 =================
+
+Forked from [schmittjoh/JMSJobQueueBundle](https://github.com/schmittjoh/JMSJobQueueBundle).
+
 
 Documentation: 
 [Resources/doc](http://jmsyst.com/bundles/JMSJobQueueBundle)
