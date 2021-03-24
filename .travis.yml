@@ -4,6 +4,7 @@ sudo: false
 
 env:
   - XDEBUG_MODE=coverage
+  - SYMFONY_DEPRECATIONS_HELPER=disabled
 
 cache:
   directories:
