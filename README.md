@@ -1,4 +1,4 @@
-digitalascetic/job-queue-bundle [![Build Status](https://travis-ci.com/digitalascetic/JMSJobQueueBundle.svg?branch=master)](http://travis-ci.org/digitalascetic/JMSJobQueueBundle)
+digitalascetic/job-queue-bundle [![Build Status](https://travis-ci.com/digitalascetic/JMSJobQueueBundle.svg?branch=master)](http://travis-ci.com/digitalascetic/JMSJobQueueBundle)
 =================
 
 Forked from [schmittjoh/JMSJobQueueBundle](https://github.com/schmittjoh/JMSJobQueueBundle).

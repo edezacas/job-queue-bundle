@@ -1,5 +1,9 @@
 # CHANGELOG
 
+4.1.2
+-----
+- Fixed README travis link.
+
 4.1.1
 -----
 - (Deprecated) EntityManager::detach is deprecated; added SYMFONY_DEPRECATIONS_HELPER to handle this deprecations messages.
