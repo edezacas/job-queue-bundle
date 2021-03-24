@@ -101,11 +101,7 @@ class ConcurrencyTest extends BaseTestCase
     private function startWorker($name)
     {
         $proc = Process::fromShellCommandline(
-            'exec '.PHP_BINARY.' '.escapeshellarg(__DIR__.'/console').' jms-job-queue:run --worker-name='.$name,
-            null,
-            array(
-                'SYMFONY_CONFIG' => $this->configFile,
-            )
+            'exec '.PHP_BINARY.' '.escapeshellarg(__DIR__.'/console').' jms-job-queue:run --worker-name='.$name
         );
         $proc->start();
 
