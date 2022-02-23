@@ -1,5 +1,5 @@
 {
-  "name": "digitalascetic/job-queue-bundle",
+  "name": "edezacas/job-queue-bundle",
   "version": "4.1.4",
   "description": "Allows to run and schedule Symfony console commands as background jobs.",
   "keywords": [
@@ -19,7 +19,7 @@
     },
     {
       "name": "Eduard Deza",
-      "email": "ed@ascetic.io"
+      "email": "edezacas@gmail.com"
     }
   ],
   "require": {
