@@ -3,7 +3,7 @@ doctrine:
         default_connection: default
         connections:
             default:
-                url: 'sqlite:///%kernel.project_dir%/var/test.db'
+                url: 'sqlite3:///%kernel.project_dir%/var/test.db'
             test:
                 driver: pdo_sqlite
                 memory: true
