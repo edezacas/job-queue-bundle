@@ -1,5 +1,9 @@
 # CHANGELOG
 
+4.2.0
+-----
+* Job $relatedEntities property not mapped correctly. Deprecated Connection::query method, use executeQuery.
+
 4.1.4
 -----
 - Updated JobManager using Types::JSON instead of Type::JSON_ARRAY or hard coded.
