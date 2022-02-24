@@ -5,3 +5,4 @@ vendor/
 /var/
 /.gemfury
 /package.zip
+*.local

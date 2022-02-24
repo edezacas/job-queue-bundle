@@ -1,5 +1,9 @@
 # CHANGELOG
 
+4.3.0
+-----
+* Changed Job _args_ JSON Type to TEXT type to solve MySQL 5.7 values equality.
+
 4.2.0
 -----
 * Job $relatedEntities property not mapped correctly. Deprecated Connection::query method, use executeQuery.

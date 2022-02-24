@@ -57,7 +57,7 @@ class JobManager
             "SELECT j FROM JMSJobQueueBundle:Job j WHERE j.command = :command AND j.args = :args"
         )
             ->setParameter('command', $command)
-            ->setParameter('args', $args, Types::JSON)
+            ->setParameter('args', json_encode($args))
             ->setMaxResults(1)
             ->getOneOrNullResult();
     }
