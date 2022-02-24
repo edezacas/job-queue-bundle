@@ -4,6 +4,7 @@ sudo: false
 
 env:
   - XDEBUG_MODE=coverage
+  - DB=sqlite
 
 cache:
   directories:

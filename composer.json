@@ -1,6 +1,6 @@
 {
   "name": "edezacas/job-queue-bundle",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Allows to run and schedule Symfony console commands as background jobs.",
   "keywords": [
     "job",
@@ -34,7 +34,8 @@
     "doctrine/orm": "*",
     "symfony/test-pack": "^1.0",
     "symfony/monolog-bundle": "^3.6",
-    "symfony/twig-bundle": "*"
+    "symfony/twig-bundle": "*",
+    "symfony/dotenv": "^5.4"
   },
   "suggest": {
     "symfony/twig-bundle": "Required when using the webinterface."

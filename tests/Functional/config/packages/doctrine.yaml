@@ -3,7 +3,7 @@ doctrine:
         default_connection: default
         connections:
             default:
-                url: 'sqlite:///%kernel.project_dir%/var/test.db'
+                url: '%env(resolve:DATABASE_URL)%'
                 driver: pdo_sqlite
             test:
                 url: 'sqlite:///:memory:'
