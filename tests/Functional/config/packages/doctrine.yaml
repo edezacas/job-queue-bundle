@@ -4,7 +4,7 @@ doctrine:
         connections:
             default:
                 url: '%env(resolve:DATABASE_URL)%'
-                driver: pdo_sqlite
+                driver: pdo_mysql
             test:
                 url: 'sqlite:///:memory:'
                 driver: pdo_sqlite
