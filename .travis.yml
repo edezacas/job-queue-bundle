@@ -1,11 +1,16 @@
-
-
 language: php
 
+services:
+  - mysql
+  -
 sudo: false
 
 env:
   - XDEBUG_MODE=coverage
+  - DB=sqlite
+
+notifications:
+  email: false
 
 cache:
   directories:
@@ -14,7 +19,7 @@ cache:
 matrix:
   fast_finish: true
   include:
-    - php: 7.2
+    - php: 7.3
     - php: 7.4
 
 before_script:
@@ -24,6 +29,5 @@ before_script:
 
 install:
   - composer install
-  - php tests/Functional/console doctrine:database:create
 
 script: phpunit --coverage-clover clover
