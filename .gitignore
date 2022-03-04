@@ -6,3 +6,4 @@ vendor/
 /.gemfury
 /package.zip
 *.local
+*.iml
